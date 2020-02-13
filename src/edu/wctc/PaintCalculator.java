@@ -1,13 +1,19 @@
 package edu.wctc;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class PaintCalculator {
 
-    private ArrayList<Room> roomList = new ArrayList<>();
+    private ArrayList<Room> PaintableRoomList = new ArrayList<>();
     private Scanner keyboard;
+    public String thisFile;
+    // public File file = new File("file.cvs");
 
     public static void main(String[] args) {
         new PaintCalculator();
@@ -29,10 +35,10 @@ public class PaintCalculator {
                         createRoom();
                         break;
                     case 2:
-                        // writeFile();
+                        writeFile();
                         break;
                     case 3:
-                        // readFile();
+                        readFile();
                         break;
                     case 4:
                         printRooms();
@@ -40,20 +46,26 @@ public class PaintCalculator {
                     case 5:
                         System.out.println("Goodbye");
                         System.exit(0);
+                    case 6:
+                        createArtPiece();
                 }
-            } catch (NumberFormatException e) {
+            } catch (NumberFormatException | FileNotFoundException e) {
                 System.out.println("Invalid choice");
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (artClassException e) {
+                e.printStackTrace();
             }
         }
 
     }
 
     private void printRooms() {
-        if (roomList.isEmpty()) {
+        if (PaintableRoomList.isEmpty()) {
             System.out.println("No rooms yet");
         }
 
-        for (Room room : roomList) {
+        for (Room room : PaintableRoomList) {
             System.out.println(room.toString());
         }
     }
@@ -65,6 +77,7 @@ public class PaintCalculator {
         System.out.println("3. Read rooms from file");
         System.out.println("4. View rooms");
         System.out.println("5. Exit");
+        System.out.println("6. Add Art Piece");
         System.out.println();
     }
 
@@ -85,7 +98,7 @@ public class PaintCalculator {
 
         try {
             Room room = new Room(length, width, height);
-            roomList.add(room);
+            PaintableRoomList.add(room);
 
             System.out.println("Room successfully created");
         } catch (BadWidthException | BadHeightException e) {
@@ -93,4 +106,39 @@ public class PaintCalculator {
         }
 
     }
+
+    private void createArtPiece() throws artClassException {
+        System.out.println("What material is it");
+        String material = keyboard.nextLine();
+        System.out.println("What the name of the Art Piece");
+        String name = keyboard.nextLine();
+        System.out.println("Whats the size in sq ft?");
+        String size = keyboard.nextLine();
+        try{
+            double size1 = Double.parseDouble(size);
+            ArtPiece pieceCreated = new ArtPiece(material,name,size1);
+        } catch(artClassException e){
+            System.out.println("Size is invalid");
+        }
+
+
+
+
+    }
+
+    private void writeFile() throws IOException {
+        RoomWriter serializedRoom = new RoomWriter(thisFile, PaintableRoomList);
+        System.out.println(serializedRoom);
+
+
+    }
+
+    private void readFile() {
+        RoomReader deserializedRoom = new RoomReader();
+        System.out.println(deserializedRoom);
+
+
+    }
+
+
 }

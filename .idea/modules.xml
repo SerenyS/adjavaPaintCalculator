@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/paint-calculator.iml" filepath="$PROJECT_DIR$/paint-calculator.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ssPaintCalculator.iml" filepath="$PROJECT_DIR$/ssPaintCalculator.iml" />
     </modules>
   </component>
 </project>

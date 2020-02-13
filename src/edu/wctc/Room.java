@@ -2,7 +2,10 @@ package edu.wctc;
 
 import java.util.ArrayList;
 
-public class Room {
+public class Room implements paintable {
+
+    private static int roomCount;
+    private int roomNum;
 
     private ArrayList<Wall> wallList;
 
@@ -28,5 +31,27 @@ public class Room {
         }
 
         return area;
+    }
+
+    public Room(int roomNum) {
+        this.roomNum = roomNum;
+        roomCount++;
+    }
+
+    @Override
+    public String toString() {
+        return "This is the number of rooms " + roomNum + "." + "and the total area =" + getArea() ;
+    }
+
+    @Override
+    public double getPremiumCost() {
+        double CostOfPaint = getArea()*paintable.PREMIUM_PAINT_COST_PER_GALLON;
+        return CostOfPaint;
+    }
+
+    @Override
+    public double getStandardCost() {
+        double CostOfPaintStandard = getArea()*paintable.STANDARD_PAINT_COST_PER_GALLON;
+        return CostOfPaintStandard;
     }
 }
